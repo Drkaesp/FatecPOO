@@ -1,0 +1,169 @@
+package revisao;
+
+// A classe define o "molde" para os objetos do tipo GameShop
+public class GameShop {
+
+    // 1. ATRIBUTOS (Encapsulamento: private)
+    // Private impede que outras classes mexam nesses dados diretamente.
+    private String jogo;
+    private double precoHora;
+    private int horasJogadas;
+
+    // 2. CONSTRUTORES
+    // Construtor Vazio: Permite criar o objeto sem dados iniciais.
+    public GameShop() {
+    }
+
+    // Construtor com Parâmetros: Obriga a passar dados ao criar o objeto.
+    public GameShop(String jogo, double precoHora) {
+        this.jogo = jogo;
+        this.precoHora = precoHora;
+        this.horasJogadas = 0; // Começa com 0 horas
+    }
+
+    // 3. GETTERS E SETTERS
+    // Métodos públicos para ler (get) e alterar (set) os dados protegidos.
+    
+    public String getJogo() {
+        return jogo;
+    }
+
+    public void setJogo(String jogo) {
+        this.jogo = jogo;
+    }
+
+    public double getPrecoHora() {
+        return precoHora;
+    }
+
+    public void setPrecoHora(double precoHora) {
+        this.precoHora = precoHora;
+    }
+
+    public int getHorasJogadas() {
+        return horasJogadas;
+    }
+    
+    // Não criamos setHorasJogadas pois usaremos o método de negócio 'jogarHoras'
+
+    // 4. MÉTODOS DE NEGÓCIO (A lógica do sistema)
+
+    // Método para acumular horas de jogo
+    public void jogarHoras(int horas) {
+        this.horasJogadas += horas; // Soma as novas horas às existentes
+        System.out.println("Você jogou por mais " + horas + " horas.");
+    }
+
+    // Calcula quanto o cliente deve pagar
+    public double calcValorPagar() {
+        return this.horasJogadas * this.precoHora;
+    }
+
+    // Verifica se o cliente ganha um brinde
+    public String brinde() {
+        if (this.horasJogadas >= 5) {
+            return "Ganhou uma Coca-Cola!";
+        } else {
+            return "Sem brinde (Jogue mais de 5h para ganhar).";
+        }
+    }
+}
+-----------------------------------------------------------------------
+package revisao;
+
+public class LocacaoVeiculo {
+
+    // 1. Atributos Privados
+    private String modelo;
+    private double valorDiaria;
+    private int diasAlugados;
+
+    // 2. Construtores
+    public LocacaoVeiculo() {
+    }
+
+    public LocacaoVeiculo(String modelo, double valorDiaria) {
+        this.modelo = modelo;
+        this.valorDiaria = valorDiaria;
+    }
+
+    // 3. Getters e Setters
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public double getValorDiaria() {
+        return valorDiaria;
+    }
+
+    public void setValorDiaria(double valorDiaria) {
+        this.valorDiaria = valorDiaria;
+    }
+
+    public int getDiasAlugados() {
+        return diasAlugados;
+    }
+
+    public void setDiasAlugados(int diasAlugados) {
+        this.diasAlugados = diasAlugados;
+    }
+
+    // 4. Métodos de Negócio
+    
+    // Calcula o total do aluguel
+    public double calcValorPagar() {
+        return this.diasAlugados * this.valorDiaria;
+    }
+
+    // Lógica do brinde baseada no valor gasto
+    public String brinde() {
+        double total = calcValorPagar();
+        if (total > 500.00) {
+            return "Ganhou Tanque Cheio!";
+        } else {
+            return "Ganhou um chaveiro.";
+        }
+    }
+}
+------------------------------------------------------------------
+package revisao;
+
+public class Principal {
+
+    public static void main(String[] args) {
+        
+        System.out.println("--- TESTE GAMESHOP ---");
+        // 1. Instanciando usando o construtor com parâmetros
+        // Estamos criando um objeto 'cliente1' do tipo GameShop
+        GameShop cliente1 = new GameShop("FIFA 24", 10.00);
+        
+        // Usando método de negócio para adicionar horas
+        cliente1.jogarHoras(3); 
+        cliente1.jogarHoras(3); // Jogou mais 3, total deve ser 6
+        
+        // Exibindo resultados
+        System.out.println("Jogo: " + cliente1.getJogo());
+        System.out.println("Total a pagar: R$ " + cliente1.calcValorPagar());
+        System.out.println("Brinde: " + cliente1.brinde());
+
+        System.out.println("\n--- TESTE LOCAÇÃO VEÍCULO ---");
+        
+        // 2. Instanciando usando o construtor vazio (padrão)
+        LocacaoVeiculo carro = new LocacaoVeiculo();
+        
+        // Usando setters para preencher os dados
+        carro.setModelo("Fiat Uno");
+        carro.setValorDiaria(80.00);
+        carro.setDiasAlugados(10); // Alugou por 10 dias
+        
+        // Exibindo resultados
+        System.out.println("Carro: " + carro.getModelo());
+        System.out.println("Valor total: R$ " + carro.calcValorPagar());
+        System.out.println("Brinde: " + carro.brinde());
+    }
+}
+----------------------------------------------------------------------------
